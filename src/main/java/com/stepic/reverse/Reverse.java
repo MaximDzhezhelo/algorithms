@@ -1,24 +1,48 @@
 package com.stepic.reverse;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Reverse {
 
     public static void main(String[] args) {
-        final int[] array = {1, 3, 5, 2, 4};
+        final int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        final int[] reversed = reverseSimple(array);
+        System.out.println(Arrays.toString(reversed));
 
-        final List<Integer> list = Arrays.stream(array).boxed().collect(Collectors.toList());
+        final int[] arrayOdd = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        final int[] reversedOdd = reverseOdd(arrayOdd);
+        System.out.println(Arrays.toString(reversedOdd));
+    }
 
-        Collections.sort(list);
+    private static int[] reverseSimple(final int[] array) {
+        if (array == null) throw new RuntimeException();
 
-        for(int i = 0; i < array.length; i ++){
-
+        final int length = array.length;
+        final int[] newArray = new int[length];
+        for (int i = length - 1, j = 0; i >= 0; i--, j++) {
+            newArray[j] = array[i];
         }
 
+        return newArray;
+    }
 
+    private static int[] reverseOdd(final int[] array) {
+        if (array == null) throw new RuntimeException();
+
+        final int length = array.length;
+        if(length % 2 == 0) throw new RuntimeException();
+
+        for (int i = length - 1, j = 0; i >= 0; i--, j++) {
+            final int tailValue = array[i];
+            final int firstValue = array[j];
+
+            if (tailValue == firstValue) break;
+
+            array[j] = tailValue;
+            array[i] = firstValue;
+        }
+
+        return array;
     }
 
 }
