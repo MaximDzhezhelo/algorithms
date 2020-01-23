@@ -1,6 +1,5 @@
-package com.stepic.lesson_5;
+package com.stepic.bubble;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

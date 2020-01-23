@@ -1,4 +1,4 @@
-package com.stepic.lesson_4;
+package com.stepic.nod;
 
 import java.util.Scanner;
 

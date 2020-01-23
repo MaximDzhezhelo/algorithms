@@ -1,4 +1,4 @@
-package com.stepic.lesson_6;
+package com.stepic.binarySearch;
 
 import java.util.Arrays;
 
