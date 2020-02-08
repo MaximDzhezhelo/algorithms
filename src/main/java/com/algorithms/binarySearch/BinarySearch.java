@@ -1,4 +1,4 @@
-package com.stepic.binarySearch;
+package com.algorithms.binarySearch;
 
 import java.util.Arrays;
 

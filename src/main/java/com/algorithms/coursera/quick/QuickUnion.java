@@ -1,4 +1,4 @@
-package com.stepic.quick;
+package com.algorithms.coursera.quick;
 
 public class QuickUnion {
 

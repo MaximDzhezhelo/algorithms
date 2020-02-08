@@ -1,4 +1,4 @@
-package com.stepic.nod;
+package com.algorithms.nod;
 
 import java.util.Scanner;
 

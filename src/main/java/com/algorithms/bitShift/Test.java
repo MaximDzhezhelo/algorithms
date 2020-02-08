@@ -1,4 +1,4 @@
-package com.stepic.bitShift;
+package com.algorithms.bitShift;
 
 public class Test {
 

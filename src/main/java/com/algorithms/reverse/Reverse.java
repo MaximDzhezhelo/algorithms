@@ -1,4 +1,4 @@
-package com.stepic.reverse;
+package com.algorithms.reverse;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.stepic.bubble;
+package com.algorithms.bubble;
 
 import java.util.Arrays;
 import java.util.List;
