@@ -1,6 +1,4 @@
-package com.algorithms.coursera.algorithms_part1;
-
-import java.util.Scanner;
+package com.algorithms.coursera.algorithms_part1.quick_find;
 
 /**
  * Coursera - Algorithms Part II

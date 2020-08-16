@@ -1,4 +1,4 @@
-package com.algorithms.coursera.algorithms_part1;
+package com.algorithms.coursera.algorithms_part1.quick_find;
 
 import java.util.Arrays;
 

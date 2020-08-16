@@ -1,4 +1,4 @@
-package com.algorithms.coursera.algorithms_part1;
+package com.algorithms.coursera.algorithms_part1.quick_find;
 
 /*
   Coursera - Algorithms Part II
@@ -11,8 +11,6 @@ package com.algorithms.coursera.algorithms_part1;
   Design a data type so that all operations (except construction) should take
   logarithmic time or better.
 */
-
-import java.util.Arrays;
 
 public class SuccessorWithDelete {
 
