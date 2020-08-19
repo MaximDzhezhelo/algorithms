@@ -1,7 +1,5 @@
 package com.algorithms.coursera.algorithms_part1.quick_find;
 
-import java.util.Arrays;
-
 public class QuickFindUF {
 
     private int[] id;
