@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DoubleCharTest {
     @Test
-    public void testHelloName() {
+    public void testDoubleChar() {
         var mk = new DoubleChar();
         assertEquals("TThhee", mk.doubleChar("The"));
         assertEquals("AAAAbbbb", mk.doubleChar("AAbb"));
