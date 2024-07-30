@@ -1,4 +1,4 @@
-package com.algorithms.reverse;
+package com.algorithms.leetcode;
 
 import java.util.Arrays;
 
