@@ -18,26 +18,18 @@ public class MaxAverage {
      * @return
      */
     public double findMaxAverageMy(int[] nums, int k) {
-        if (nums.length < k) {
-            throw new IllegalArgumentException();
-        }
-
         int left = 0;
-        int right = k;
-
-        var results = new ArrayList<Double>();
-        while (right <= nums.length) {
-            int sum = 0;
-            for (int i = left; i < right; i++) {
-                sum = sum + nums[i];
+        var arr = new ArrayList<Double>();
+        int sum = 0;
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+            if (left + right >= k - 1) {
+                arr.add((double) (sum / k));
+                sum -= nums[left];
+                left++;
             }
-
-            results.add((double) sum / k);
-            left++;
-            right++;
         }
-
-        return Collections.max(results);
+        return Collections.max(arr);
     }
 
     /**
