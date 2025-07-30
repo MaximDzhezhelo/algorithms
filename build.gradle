@@ -1,1 +1,1 @@
-plugins {    id 'java'}group 'com.makson'version '1.0.0'repositories {    mavenCentral()}dependencies {    testImplementation 'junit:junit:4.13'}
+plugins {    id 'java'}group 'com.makson'version '1.0.0'java {    toolchain {        languageVersion = JavaLanguageVersion.of(21)    }}repositories {    mavenCentral()}dependencies {    testImplementation 'junit:junit:4.13.1'}
