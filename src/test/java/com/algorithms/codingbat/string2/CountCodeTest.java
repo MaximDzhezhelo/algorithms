@@ -1,12 +1,13 @@
 package com.algorithms.codingbat.string2;
 
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CountCodeTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class CountCodeTest {
 
     @Test
-    public void testCountCode() {
+    void testCountCode() {
         var mk = new CountCode();
         assertEquals(1, mk.countCode("aaacodebbb"));
         assertEquals(2, mk.countCode("codexxcode"));

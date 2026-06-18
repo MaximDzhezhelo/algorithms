@@ -1,13 +1,13 @@
 package com.algorithms.codingbat.string1;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Without2Test {
 
     @Test
-    public void testLeft() {
+    void testLeft() {
         var mk = new Without2();
         assertEquals("lloHe", mk.without2("HelloHe"));
         assertEquals("HelloHi", mk.without2("HelloHi"));

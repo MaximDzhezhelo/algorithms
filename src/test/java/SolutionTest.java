@@ -1,14 +1,14 @@
 import com.algorithms.logicTask.BoysGirls;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SolutionTest {
 
     final BoysGirls solution = new BoysGirls();
 
     @Test
-    public void testCount() {
+    void testCount() {
         int count = solution.count(0, 0);
         assertEquals(0, count);
 

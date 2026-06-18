@@ -1,12 +1,12 @@
 package com.algorithms.codingbat.string2;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DoubleCharTest {
     @Test
-    public void testDoubleChar() {
+    void testDoubleChar() {
         var mk = new DoubleChar();
         assertEquals("TThhee", mk.doubleChar("The"));
         assertEquals("AAAAbbbb", mk.doubleChar("AAbb"));

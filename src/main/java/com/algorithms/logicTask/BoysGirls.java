@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class BoysGirls {
 
-    public static void main(String[] args) throws InterruptedException {
+    static void main(String[] args) {
         final Scanner sc = new Scanner(System.in);
         final int X = sc.nextInt();
         final int Y = sc.nextInt();

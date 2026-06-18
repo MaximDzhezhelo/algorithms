@@ -1,35 +1,16 @@
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-
-### IntelliJ IDEA ###
+Thumbs.db
+.DS_Store
+.gradle
+build/
+target/
+out/
 .idea
-*.iws
+.micronaut
 *.iml
 *.ipr
-
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-
-### Example user template
-
-# IntelliJ project files
-/out
-/log
-/dist
-/config/
-/data/
-/gradle/
-/gradlew
-/gradlew.bat
-.gradle
-/build/
+*.iws
+.project
+.settings
+.classpath
+.factorypath
+.envrc

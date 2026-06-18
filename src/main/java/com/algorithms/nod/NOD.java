@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class NOD {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         final int result_rec = nodRecAcrossScaner();
         System.out.println("Result " + result_rec + " Executed time " + (System.currentTimeMillis() - startTime) + " ms");
