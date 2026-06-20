@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BubbleSort {
 
-    public static void main(String[] args) {
+    static void main() {
         final List<Integer> sortList = sort(Arrays.asList(11, 1, 3, 2, 6, 4, 7, 2, 4, 7, 5, 9, 1));
         System.out.println(sortList);
     }
@@ -15,10 +15,10 @@ public class BubbleSort {
      * <a href="https://opendsa-server.cs.vt.edu/embed/bubblesortAV">visualization</a>
      * <p>
      * Best Case: 𝑂(𝑛) - This occurs when the array is already sorted, and the algorithm can detect that no swaps are needed.  <p>
-     * Average Case: O(n^2) - This is because each element is compared with every other element.  <p>
-     * Worst Case: O(n^2) - This occurs when the array is sorted in reverse order, necessitating the maximum number of swaps.
+     * Average Case: O(n²) - This is because each element is compared with every other element.  <p>
+     * Worst Case: O(n²) - This occurs when the array is sorted in reverse order, necessitating the maximum number of swaps.
      */
-    public static List<Integer> sort(final List<Integer> list) {
+    public static List<Integer> sort(List<Integer> list) {
         if (list == null || list.isEmpty()) return list;
 
         boolean flag = true;

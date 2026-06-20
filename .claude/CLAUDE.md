@@ -43,13 +43,13 @@ This is a Java-based algorithms practice repository containing solutions from mu
   - `fibonacci/` - Fibonacci implementations including parallel ForkJoin variants
   - `lesson_1/`, `lesson_2/` - Educational exercises
 
-- `src/test/java/com/algorithms/` - JUnit 4 test files mirroring main structure
+- `src/test/java/com/algorithms/` - JUnit 5 test files mirroring main structure
 
 ## Development Guidelines
 
 **Java version:** Java 25 (configured via Gradle toolchain)
 
-**Testing framework:** JUnit 4.13.1
+**Testing framework:** JUnit 5.11.0 (Jupiter)
 
 **Code structure:** Each algorithm/solution is self-contained in its own class. Many classes include main() methods for standalone execution and detailed JavaDoc comments explaining algorithm complexity and approach.
 

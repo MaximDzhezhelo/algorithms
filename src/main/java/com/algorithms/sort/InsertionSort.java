@@ -11,8 +11,8 @@ public class InsertionSort {
      * <a href="https://www.youtube.com/watch?v=EdIKIf9mHk0">visualization</a>
      * <p>
      * Best Case: O(n) - This occurs when the array is already sorted. The algorithm will make only n−1 comparisons and no swaps.  <p>
-     * Average Case: O(n^2) -  This is because, on average, each element is compared with half of the previous elements in the sorted part of the array.  <p>
-     * Worst Case: O(n^2) - This occurs when the array is sorted in reverse order. Every element needs to be compared with all previous elements, resulting in the maximum number of comparisons and shifts.
+     * Average Case: O(n²) - This is because, on average, each element is compared with half of the previous elements in the sorted part of the array.  <p>
+     * Worst Case: O(n²) - This occurs when the array is sorted in reverse order. Every element needs to be compared with all previous elements, resulting in the maximum number of comparisons and shifts.
      */
     public static List<Integer> sort(final List<Integer> list) {
         if (list == null || list.isEmpty()) return list;
