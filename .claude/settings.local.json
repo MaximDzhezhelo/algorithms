@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:code.claude.com)",
       "Bash(find:*)",
-      "Bash(./gradlew test:*)"
+      "Bash(./gradlew test:*)",
+      "Bash(./gradlew build:*)"
     ],
     "deny": [],
     "ask": []
