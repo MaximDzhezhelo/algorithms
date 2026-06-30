@@ -2,6 +2,7 @@ package com.algorithms.leetcode;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,6 +24,15 @@ class TwoSumTest {
         assertFalse(ts.hasTwoSumWithSortedArray(nums1, 29));
         assertTrue(ts.hasTwoSumWithSortedArray(nums1, 9));
         assertTrue(ts.hasTwoSumWithSortedArray(nums1, 17));
+    }
+
+    @Test
+    public void testHasTwoSumWithSortedArray2() {
+        var ts = new TwoSum();
+
+        assertArrayEquals(new int[]{0, 1}, ts.twoSum(new int[]{2, 7, 11, 15}, 9));
+        assertArrayEquals(new int[]{1, 2}, ts.twoSum(new int[]{3, 2, 4}, 6));
+        assertArrayEquals(new int[]{0, 1}, ts.twoSum(new int[]{3, 3}, 6));
     }
 
 }
