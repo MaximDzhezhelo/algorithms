@@ -4,7 +4,8 @@
       "WebFetch(domain:code.claude.com)",
       "Bash(find:*)",
       "Bash(./gradlew test:*)",
-      "Bash(./gradlew build:*)"
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew compileJava:*)"
     ],
     "deny": [],
     "ask": []
