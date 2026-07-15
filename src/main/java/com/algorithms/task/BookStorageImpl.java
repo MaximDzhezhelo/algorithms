@@ -9,26 +9,32 @@ import java.util.stream.Collectors;
 
 public class BookStorageImpl implements BookStorage {
 
-    private final ConcurrentMap<String, ConcurrentMap<String, String>> storage = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, ConcurrentMap<String, TagValue>> storage = new ConcurrentHashMap<>();
 
     @Override
     public void set(String bookId, String tag, String value) {
-        storage.computeIfAbsent(bookId, _ -> new ConcurrentHashMap<>())
-                .put(tag, value);
+        storage.compute(bookId, (k, innerMap) -> {
+            if (innerMap == null) {
+                innerMap = new ConcurrentHashMap<>();
+            }
+            innerMap.put(tag, new TagValue(value, null));
+            return innerMap;
+        });
     }
 
     @Override
     public Optional<String> get(String bookId, String tag) {
-        ConcurrentMap<String, String> tags = storage.get(bookId);
+        ConcurrentMap<String, TagValue> tags = storage.get(bookId);
         if (tags == null) {
             return Optional.empty();
         }
-        return Optional.ofNullable(tags.get(tag));
+        return Optional.ofNullable(tags.get(tag))
+                .map(TagValue::value);
     }
 
     @Override
     public boolean remove(String bookId, String tag) {
-        ConcurrentMap<String, String> tags = storage.get(bookId);
+        ConcurrentMap<String, TagValue> tags = storage.get(bookId);
         if (tags == null) {
             return false;
         }
@@ -41,10 +47,10 @@ public class BookStorageImpl implements BookStorage {
         return Optional.ofNullable(storage.get(bookId)).orElse(new ConcurrentHashMap<>())
                 .entrySet()
                 .stream()
-                .sorted(Map.Entry.<String, String>comparingByKey().reversed())
+                .sorted(Map.Entry.<String, TagValue>comparingByKey().reversed())
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        Map.Entry::getValue,
+                        e -> e.getValue().value(),
                         (a, b) -> a,
                         LinkedHashMap::new
                 ));
@@ -59,9 +65,21 @@ public class BookStorageImpl implements BookStorage {
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        Map.Entry::getValue,
+                        e -> e.getValue().value(),
                         (a, b) -> a,
                         LinkedHashMap::new
                 ));
     }
+
+    @Override
+    public void setWithTtl(String bookId, String tag, String value, long ttlMillis) {
+        storage.compute(bookId, (k, innerMap) -> {
+            if (innerMap == null) {
+                innerMap = new ConcurrentHashMap<>();
+            }
+            innerMap.put(tag, new TagValue(value, ttlMillis));
+            return innerMap;
+        });
+    }
+
 }

@@ -522,4 +522,211 @@ class BookStorageImplTest {
 
         assertEquals(3, result.size());
     }
+
+    // Tests for TTL functionality
+
+    @Test
+    public void testSetWithTtlBasic() throws InterruptedException {
+        storage.setWithTtl("book1", "author", "John Doe", 100);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertTrue(result.isPresent());
+        assertEquals("John Doe", result.get());
+
+        Thread.sleep(150);
+
+        result = storage.get("book1", "author");
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void testSetWithTtlAccessibleBeforeExpiration() {
+        storage.setWithTtl("book1", "author", "John Doe", 5000);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertTrue(result.isPresent());
+        assertEquals("John Doe", result.get());
+    }
+
+    @Test
+    public void testGetRemainingTtlBasic() throws InterruptedException {
+        storage.setWithTtl("book1", "author", "John Doe", 1000);
+
+        long remaining = storage.getRemainingTtl("book1", "author");
+        assertTrue(remaining > 0 && remaining <= 1000);
+
+        Thread.sleep(500);
+
+        remaining = storage.getRemainingTtl("book1", "author");
+        assertTrue(remaining > 0 && remaining <= 500);
+    }
+
+    @Test
+    public void testGetRemainingTtlExpired() throws InterruptedException {
+        storage.setWithTtl("book1", "author", "John Doe", 100);
+
+        Thread.sleep(150);
+
+        long remaining = storage.getRemainingTtl("book1", "author");
+        assertEquals(-1, remaining);
+    }
+
+    @Test
+    public void testGetRemainingTtlNonExistent() {
+        long remaining = storage.getRemainingTtl("book1", "nonexistent");
+        assertEquals(-1, remaining);
+    }
+
+    @Test
+    public void testGetRemainingTtlNoTtl() {
+        storage.set("book1", "author", "John Doe");
+
+        long remaining = storage.getRemainingTtl("book1", "author");
+        assertEquals(-2, remaining);
+    }
+
+    @Test
+    public void testMixingRegularSetAndTtl() throws InterruptedException {
+        storage.set("book1", "author", "John Doe");
+        storage.setWithTtl("book1", "title", "My Book", 100);
+
+        assertTrue(storage.get("book1", "author").isPresent());
+        assertTrue(storage.get("book1", "title").isPresent());
+
+        Thread.sleep(150);
+
+        assertTrue(storage.get("book1", "author").isPresent());
+        assertFalse(storage.get("book1", "title").isPresent());
+    }
+
+    @Test
+    public void testOverwriteTtlWithRegularSet() throws InterruptedException {
+        storage.setWithTtl("book1", "author", "John Doe", 100);
+        storage.set("book1", "author", "Jane Smith");
+
+        Thread.sleep(150);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertTrue(result.isPresent());
+        assertEquals("Jane Smith", result.get());
+
+        long remaining = storage.getRemainingTtl("book1", "author");
+        assertEquals(-2, remaining);
+    }
+
+    @Test
+    public void testOverwriteRegularSetWithTtl() throws InterruptedException {
+        storage.set("book1", "author", "John Doe");
+        storage.setWithTtl("book1", "author", "Jane Smith", 100);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertTrue(result.isPresent());
+        assertEquals("Jane Smith", result.get());
+
+        Thread.sleep(150);
+
+        result = storage.get("book1", "author");
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void testRemoveTtlEntry() {
+        storage.setWithTtl("book1", "author", "John Doe", 5000);
+
+        boolean removed = storage.remove("book1", "author");
+        assertTrue(removed);
+
+        assertFalse(storage.get("book1", "author").isPresent());
+        assertEquals(-1, storage.getRemainingTtl("book1", "author"));
+    }
+
+    @Test
+    public void testGetAllTagsSortedDescWithExpiredEntries() throws InterruptedException {
+        storage.set("book1", "author", "John Doe");
+        storage.setWithTtl("book1", "title", "My Book", 100);
+        storage.set("book1", "year", "2023");
+
+        Thread.sleep(150);
+
+        var result = storage.getAllTagsSortedDesc("book1");
+
+        assertEquals(2, result.size());
+        assertTrue(result.containsKey("author"));
+        assertTrue(result.containsKey("year"));
+        assertFalse(result.containsKey("title"));
+    }
+
+    @Test
+    public void testGetByTagPrefixWithExpiredEntries() throws InterruptedException {
+        storage.set("book1", "author", "John Doe");
+        storage.setWithTtl("book1", "author_name", "Jane Smith", 100);
+        storage.set("book1", "title", "My Book");
+
+        Thread.sleep(150);
+
+        var result = storage.getByTagPrefix("book1", "author");
+
+        assertEquals(1, result.size());
+        assertEquals("John Doe", result.get("author"));
+        assertFalse(result.containsKey("author_name"));
+    }
+
+    @Test
+    public void testSetWithZeroTtl() {
+        storage.setWithTtl("book1", "author", "John Doe", 0);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void testSetWithNegativeTtl() {
+        storage.setWithTtl("book1", "author", "John Doe", -100);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void testSetWithVeryLongTtl() {
+        storage.setWithTtl("book1", "author", "John Doe", Long.MAX_VALUE);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertTrue(result.isPresent());
+        assertEquals("John Doe", result.get());
+
+        long remaining = storage.getRemainingTtl("book1", "author");
+        assertTrue(remaining > 0);
+    }
+
+    @Test
+    public void testMultipleTtlEntriesExpireIndependently() throws InterruptedException {
+        storage.setWithTtl("book1", "tag1", "value1", 100);
+        storage.setWithTtl("book1", "tag2", "value2", 200);
+        storage.setWithTtl("book1", "tag3", "value3", 300);
+
+        Thread.sleep(150);
+
+        assertFalse(storage.get("book1", "tag1").isPresent());
+        assertTrue(storage.get("book1", "tag2").isPresent());
+        assertTrue(storage.get("book1", "tag3").isPresent());
+
+        Thread.sleep(100);
+
+        assertFalse(storage.get("book1", "tag2").isPresent());
+        assertTrue(storage.get("book1", "tag3").isPresent());
+    }
+
+    @Test
+    public void testUpdateTtlEntry() throws InterruptedException {
+        storage.setWithTtl("book1", "author", "John Doe", 100);
+        Thread.sleep(50);
+        storage.setWithTtl("book1", "author", "Jane Smith", 200);
+
+        Thread.sleep(100);
+
+        Optional<String> result = storage.get("book1", "author");
+        assertTrue(result.isPresent());
+        assertEquals("Jane Smith", result.get());
+    }
 }

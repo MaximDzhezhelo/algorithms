@@ -40,4 +40,29 @@ public interface BookStorage {
         return Map.of();
     }
 
+    /**
+     * Sets a tag-value pair for a book with a time-to-live (TTL).
+     * After the TTL expires, the entry will no longer be retrievable via get operations.
+     *
+     * @param bookId the ID of the book
+     * @param tag the tag name
+     * @param value the value to store
+     * @param ttlMillis time-to-live in milliseconds
+     */
+    default void setWithTtl(String bookId, String tag, String value, long ttlMillis) {
+    }
+
+    /**
+     * Returns the remaining TTL (time-to-live) for a given tag in milliseconds.
+     * Returns -1 if the tag does not exist or has already expired.
+     * Returns -2 if the tag exists but has no TTL (was set without TTL).
+     *
+     * @param bookId the ID of the book
+     * @param tag the tag name
+     * @return remaining TTL in milliseconds, -1 if expired/not found, -2 if no TTL
+     */
+    default long getRemainingTtl(String bookId, String tag) {
+        return -1;
+    }
+
 }
